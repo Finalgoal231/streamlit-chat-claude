@@ -1,0 +1,9 @@
+streamlit
+google-generativeai
+anthropic
+pandas
+openpyxl
+openai
+pillow
+google-cloud-firestore
+google-api-python-client
