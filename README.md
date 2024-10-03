@@ -11,6 +11,10 @@ This application provides a chat interface to consolidate OpenAI, Google, and An
 - **Optional Password Protection**: Protect access to the app with a password.
 - **User Information Integration**: Each user message is prepended with user information for personalized interactions.
 
+## Demo
+
+https://imgur.com/Hwhu8gm
+
 ## Installation
 
 ### Prerequisites
