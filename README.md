@@ -46,7 +46,7 @@ pip install -r requirements.txt
 
 - Navigate to **Project Settings > Service Accounts**.
 - Click on **"Generate new private key"** and save the JSON file.
-- **Note:** You'll need the contents of this JSON file for the next step.
+- You'll need to convert this JSON file to TOML using key-to-toml.py (or your preferred method).
 
 ### 4. Configure `st.secrets`
 
@@ -54,7 +54,7 @@ Streamlit uses `st.secrets` to manage sensitive information securely. You need t
 
 **Create a Secrets File:**
 
-Create a `.streamlit` folder in the root directory of your project, and a file named `secrets.toml` with the following structure:
+Inside the `.streamlit` folder in the root directory of your project, add a file named `secrets.toml` with the following structure:
 
 ```toml
 [OPENAI_API_KEY]
@@ -74,7 +74,13 @@ ANTHROPIC_API_KEY = "your-anthropic-api-key"
 # passw = "your-secure-password"
 ```
 
-**Replace the placeholders** (`your-openai-api-key`, `your-google-api-key`, etc.) with your actual API keys.
+**Convert your JSON key:** 
+
+Place the JSON key in your root directory and name it `firestore-key.json`, run `python key-to-toml.py` and copy the content of `key.toml` into your `secrets.toml`. Delete your `firestore-key.json`, this ensures your Firebase key is secure.
+
+**Replace the placeholders:** 
+
+(`your-openai-api-key`, `your-google-api-key`, etc.) with your actual API keys.
 
 **Secure Your Secrets:**
 
@@ -91,14 +97,14 @@ Optional password protection to restrict access.
 
 **Enable Password Protection:**
 
-In the `secrets.toml` file, uncomment and set the `passw` field:
+In the `secrets.toml` file, set the `passw` field:
 
 ```toml
 [passw]
 passw = "your-secure-password"
 ```
 
-Uncomment lines 51 <-> 55:
+Uncomment lines 51 <-> 55 in `main.py`:
 
 ```python
 PASS = st.secrets["passw"]
