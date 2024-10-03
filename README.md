@@ -85,17 +85,7 @@ Ensure that `secrets.toml` is not committed to version control by adding it to y
 /.streamlit/secrets.toml
 ```
 
-### 5. Config settings for Streamlit Cloud file uploads
-
-In the `.streamlit` folder, add a file named `config.toml` with the following content:
-
-```toml
-[server]
-enableXsrfProtection = false
-enableCORS = false
-```
-
-### 6. (Optional) Set Up Password Protection
+### 5. (Optional) Set Up Password Protection
 
 Optional password protection to restrict access.
 
