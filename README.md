@@ -13,7 +13,7 @@ This application provides a chat interface to consolidate OpenAI, Google, and An
 
 ## Demo
 
-![Demo](https://i.imgur.com/f8jkeUF.gif)
+![Demo](https://i.imgur.com/6FfTkvT.gif)
 
 ## Installation
 
