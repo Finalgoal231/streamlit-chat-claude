@@ -68,6 +68,8 @@ ANTHROPIC_API_KEY = "your-anthropic-api-key"
 
 [textkey]
 # Use key-to-toml.py to convert your JSON to TOML and paste it here
+# It should be a dict format e.g. textkey = "{\n  \"type\": \"service_account\"...}"
+textkey = "your-json-key"
 
 [passw]
 # Optional: Uncomment and set your password if you want to enable password protection
