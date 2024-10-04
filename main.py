@@ -39,7 +39,7 @@ def get_db_client():
     """
     key_dict = json.loads(st.secrets["textkey"])
     creds = service_account.Credentials.from_service_account_info(key_dict)
-    db = firestore.Client(credentials=creds, project="")
+    db = firestore.Client(credentials=creds, project="public-chatty")
     return db
 
 # --- Initialize Firestore client ---
@@ -107,20 +107,20 @@ def save_conversation(conversation_name):
             try:
                 content_to_save = json.dumps(sanitized_content)
             except (TypeError, OverflowError) as e:
-                st.error(f"Error serializing message content at index {idx}: {e}")
+                st.error(f"Error serializing message content")
                 continue 
         elif isinstance(content, list):
             try:
                 content_to_save = json.dumps(content)
             except (TypeError, OverflowError) as e:
-                st.error(f"Error serializing message content at index {idx}: {e}")
+                st.error(f"Error serializing message content")
                 continue
         else:
             content_to_save = content
 
         # Ensure content size is within Firestore limits
         if isinstance(content_to_save, str) and len(content_to_save.encode('utf-8')) > 900 * 1024:
-            st.error(f"Message content at index {idx} exceeds size limits and was not saved.")
+            st.error(f"Message content exceeds size limits and was not saved")
             continue
 
         # Add the sanitized message to Firestore
@@ -131,7 +131,7 @@ def save_conversation(conversation_name):
                 "timestamp": firestore.SERVER_TIMESTAMP
             })
         except Exception as e:
-            st.error(f"Failed to save message at index {idx}: {e}")
+            st.error(f"Failed to save message")
             continue
 
     st.success(f"Saved conversation: '{conversation_name}'")
@@ -157,7 +157,7 @@ def load_conversation(conversation_id):
                 pass 
             st.session_state.messages.append({"role": data.get("role"), "content": content})
     except NotFound:
-        st.error("Conversation not found.")
+        st.error("Conversation not found")
 
 def clear_conversation():
     """
@@ -180,7 +180,7 @@ def stream_response(response):
             else:
                 yield ''
         except AttributeError as e:
-            st.error(f"Error processing chunk: {e}")
+            st.error(f"Error processing chunk")
             yield "An error occurred while processing the response."
 
 def handle_file(uploaded_file):
@@ -269,7 +269,7 @@ def convert_image_to_base64(file, max_size_mb=5):
         return encoded_image
 
     except Exception as e:
-        st.error(f"Error processing image: {e}")
+        st.error(f"Error processing image")
         return None
 
 def prepare_api_messages(user=True):
@@ -350,7 +350,7 @@ def open_ai_completion(uploaded_file):
                 }
             })
         except Exception as e:
-            st.error(f"Image generation failed: {e}")
+            st.error(f"Image generation failed")
         
         # Exit after handling image generation 
         return  
@@ -384,7 +384,7 @@ def open_ai_completion(uploaded_file):
                         "content": f"Here is the data from the uploaded Excel file:\n{df_string}"
                     })
             except Exception as e:
-                st.error(f"Failed to process Excel file: {e}")
+                st.error(f"Failed to process Excel file")
                 # Exit if Excel processing fails
                 return  
 
@@ -393,7 +393,7 @@ def open_ai_completion(uploaded_file):
             try:
                 base64_image = convert_image_to_base64(uploaded_file)
                 if base64_image is None:
-                    st.error("Failed to convert image to base64.")
+                    st.error("Failed to convert image to base64")
                     return
 
                 image_data_uri = f"data:{mime_type};base64,{base64_image}"
@@ -425,12 +425,12 @@ def open_ai_completion(uploaded_file):
                     })
 
             except Exception as e:
-                st.error(f"Failed to process image file: {e}")
+                st.error(f"Failed to process image file")
                 # Exit if image processing fails
                 return  
 
         else:
-            st.error("Unsupported file type uploaded.")
+            st.error("Unsupported file type uploaded")
              # Exit if file type is unsupported
             return 
 
@@ -535,7 +535,7 @@ def open_ai_completion(uploaded_file):
                             "text": f"Here is the data from the uploaded Excel file:\n{df_string}"
                         })
                     except Exception as e:
-                        st.error(f"Failed to process Excel file for API messages: {e}")
+                        st.error(f"Failed to process Excel file")
 
     # Handle Models Requiring Structured Messages 
     if st.session_state.selected_model in models_requiring_structured:
@@ -588,7 +588,7 @@ def open_ai_completion(uploaded_file):
             st.write(assistant_msg)
             st.session_state.messages.append({"role": "assistant", "content": assistant_msg})
         except Exception as e:
-            st.error(f"Completion failed: {e}")
+            st.error(f"Request failed")
 
     else:
         # Handle models that don't require structured messages
@@ -602,7 +602,7 @@ def open_ai_completion(uploaded_file):
             response = st.write_stream(completion)
             st.session_state.messages.append({"role": "assistant", "content": response})
         except Exception as e:
-            st.error(f"Completion failed: {e}")
+            st.error(f"Request failed")
 
 def google_gemini_completion(uploaded_file):
     """
@@ -653,7 +653,7 @@ def google_gemini_completion(uploaded_file):
             full_response = full_response[len("assistant:"):].strip()
         st.session_state.messages.append({"role": "assistant", "content": full_response})
     except Exception as e:
-        st.error(f"An error occurred: {e}")
+        st.error(f"An error occurred")
 
 def anthropic_completion(uploaded_file):
     """
@@ -690,7 +690,7 @@ def anthropic_completion(uploaded_file):
                 image_data = convert_image_to_base64(uploaded_file)
 
                 if image_data is None:
-                    st.error("Failed to convert image to base64.")
+                    st.error("Failed to convert image to base64")
                     return
 
                 image_content = {
@@ -745,7 +745,7 @@ def anthropic_completion(uploaded_file):
                 try:
                     df = pd.read_excel(uploaded_file)
                 except Exception as e:
-                    st.error(f"Failed to read Excel file: {e}")
+                    st.error(f"Failed to read Excel file")
                     return
 
                 df_string = df.to_string(index=False)
@@ -793,7 +793,7 @@ def anthropic_completion(uploaded_file):
                     cleaned_messages.append(dataframe_message)
 
             else:
-                st.error("Unsupported file type. Please upload a JPEG, PNG, GIF image or an Excel file.")
+                st.error("Unsupported file type")
                 return
 
         # Prepare API messages with USER_INFO
@@ -857,11 +857,11 @@ def anthropic_completion(uploaded_file):
             last_msg = st.session_state.messages[-1]
             second_last_msg = st.session_state.messages[-2]
             if last_msg["role"] == second_last_msg["role"]:
-                st.error("Role alternation issue detected in message history.")
+                st.error("Role alternation issue detected")
                 # Optionally, handle the inconsistency here
 
     except Exception as e:
-        st.error(f"An error occurred: {e}")
+        st.error(f"An error occurred")
 
 # --- Session State Initialization ---
 

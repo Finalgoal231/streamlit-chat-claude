@@ -1,6 +1,6 @@
-# Multi AI Platform Streamlit App
+# Multi AI Platform Chat App
 
-This application provides a chat interface to consolidate OpenAI, Google, and Anthropic models into one chat service. It includes conversation saving/loading, file uploads, image generation, integrated with Firebase Firestore for persistent storage. Available models will depend on your API access, please check your development account with the various platforms.
+A simple Streamlit application to consolidate OpenAI, Google, and Anthropic models into one chat interface. It includes conversation saving/loading, file uploads, image generation, integrated with Firebase Firestore for persistent storage. Available models will depend on your API access, please check your development account with the various platforms.
 
 ## Features
 
@@ -10,6 +10,16 @@ This application provides a chat interface to consolidate OpenAI, Google, and An
 - **Image Generation**: Generate images using OpenAI's DALL·E model directly from the chat interface.
 - **Optional Password Protection**: Protect access to the app with a password.
 - **User Information Integration**: Each user message is prepended with user information for personalized interactions.
+
+## Demo
+
+![Demo](https://i.imgur.com/YwleOCY.gif)
+
+**You can try a demo at:**
+
+[chatty-demo.streamlit.app](https://chatty-demo.streamlit.app/)
+
+The demo has limited monthly credit, available with OpenAI for you to try.
 
 ## Installation
 
@@ -78,11 +88,8 @@ textkey = "your-json-key"
 
 **Convert your JSON key:** 
 
-Place the JSON key in your root directory and name it `firestore-key.json`, run `python key-to-toml.py` and copy the content of `key.toml` into your `secrets.toml`. Delete your `firestore-key.json`, this ensures your Firebase key is secure.
-
-**Replace the placeholders:** 
-
-(`your-openai-api-key`, `your-google-api-key`, etc.) with your actual API keys.
+Place the JSON key in your root directory and name it `firestore-key.json`, run `python key-to-toml.py` and copy the content of `key.toml` into your `secrets.toml`. 
+Delete your `key.toml` and `firestore-key.json`, this ensures your Firebase key is secure.
 
 **Secure Your Secrets:**
 
@@ -114,6 +121,21 @@ password = st.sidebar.text_input("Password", type="password")
 
 if PASS != password:
     st.stop()
+```
+
+### 6. (Optional) Set Up User Information
+
+Line 25 <-> 30 allows for information to be embedded into the start of the message, providing some context about the user.
+
+```python
+USER_INFO_TEMPLATE = {
+    "name": "",
+    "DOB": "",
+    "nationality": "",
+    "Language": "English (native)",
+    "datetime": "",
+    "system": ""
+}
 ```
 
 ## Running the App
@@ -157,8 +179,7 @@ Depending on the selected model, specific file types can be uploaded as attachme
 
 **Saving Conversations:**
 
-- Enter a name for your conversation in the **"Save conversation"** text input field in the sidebar.
-- Click the **Save** button to store the current chat history in Firebase Firestore.
+- Enter a name for your conversation and click the **Save** button to store the current chat history.
 
 **Loading Conversations:**
 
