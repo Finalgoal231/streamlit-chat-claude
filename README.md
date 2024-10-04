@@ -1,7 +1,5 @@
 # Multi AI Platform Chat App
-# Multi AI Platform Chat App
 
-A simple Streamlit application to consolidate OpenAI, Google, and Anthropic models into one chat interface. It includes conversation saving/loading, file uploads, image generation, integrated with Firebase Firestore for persistent storage. Available models will depend on your API access, please check your development account with the various platforms.
 A simple Streamlit application to consolidate OpenAI, Google, and Anthropic models into one chat interface. It includes conversation saving/loading, file uploads, image generation, integrated with Firebase Firestore for persistent storage. Available models will depend on your API access, please check your development account with the various platforms.
 
 ## Features
@@ -21,7 +19,7 @@ A simple Streamlit application to consolidate OpenAI, Google, and Anthropic mode
 
 [chatty-demo.streamlit.app](https://chatty-demo.streamlit.app/)
 
-The demo has limited monthly credit, available with OpenAI for you to try.
+The demo has limited monthly credit, available with OpenAI models only.
 
 ## Installation
 
@@ -91,8 +89,7 @@ textkey = "your-json-key"
 **Convert your JSON key:** 
 
 Place the JSON key in your root directory and name it `firestore-key.json`, run `python key-to-toml.py` and copy the content of `key.toml` into your `secrets.toml`. 
-Delete your `key.toml` and `firestore-key.json`, this ensures your Firebase key is secure.
-Place the JSON key in your root directory and name it `firestore-key.json`, run `python key-to-toml.py` and copy the content of `key.toml` into your `secrets.toml`. 
+
 Delete your `key.toml` and `firestore-key.json`, this ensures your Firebase key is secure.
 
 **Secure Your Secrets:**
@@ -125,21 +122,6 @@ password = st.sidebar.text_input("Password", type="password")
 
 if PASS != password:
     st.stop()
-```
-
-### 6. (Optional) Set Up User Information
-
-Line 25 <-> 30 allows for information to be embedded into the start of the message, providing some context about the user.
-
-```python
-USER_INFO_TEMPLATE = {
-    "name": "",
-    "DOB": "",
-    "nationality": "",
-    "Language": "English (native)",
-    "datetime": "",
-    "system": ""
-}
 ```
 
 ### 6. (Optional) Set Up User Information
@@ -198,7 +180,6 @@ Depending on the selected model, specific file types can be uploaded as attachme
 
 **Saving Conversations:**
 
-- Enter a name for your conversation and click the **Save** button to store the current chat history.
 - Enter a name for your conversation and click the **Save** button to store the current chat history.
 
 **Loading Conversations:**
