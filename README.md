@@ -13,7 +13,7 @@ A simple Streamlit application to consolidate OpenAI, Google, and Anthropic mode
 
 ## Demo
 
-![Demo](https://i.imgur.com/YwleOCY.gif)
+![Demo](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWhvdmJ2c2pzNnlkMmtwMDE3MWU2M2wwbnM0Y2tyNzl6MGxkcDU2byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qpVZrKWmBTlHZRd18s/giphy.gif)
 
 **You can try a demo at:**
 
