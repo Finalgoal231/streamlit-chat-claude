@@ -19,7 +19,7 @@ A simple Streamlit application to consolidate OpenAI, Google, and Anthropic mode
 
 [chatty-demo.streamlit.app](https://chatty-demo.streamlit.app/)
 
-The demo has limited monthly credit, available with OpenAI models only.
+The demo has limited monthly credits, so it may not always be available for use.
 
 ## Installation
 
