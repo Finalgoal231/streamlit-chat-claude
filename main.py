@@ -62,7 +62,7 @@ client_anthropic = anthropic.Anthropic(api_key=st.secrets["ANTHROPIC_API_KEY"])
 
 # --- Model Selection ---
 
-openai_models = ["gpt-4o", "o1-preview", "o1-mini"]
+openai_models = ["gpt-4o", "o1-mini"]
 gemini_models = ["gemini-1.5-flash-latest", "gemini-1.5-pro-latest"]
 anthropic_models = ["claude-3-5-sonnet-20240620"]
 all_models = openai_models + gemini_models + anthropic_models
